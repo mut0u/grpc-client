@@ -4,4 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [grpc.transformer "0.1.0-SNAPSHOT"]])
+                 [grpc.transformer "0.1.0-SNAPSHOT"]]
+  :profiles {:uberjar {:aot :all}}
+  :main grpc-client.core
+  )

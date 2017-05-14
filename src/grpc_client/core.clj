@@ -1,6 +1,5 @@
 (ns grpc-client.core
-  (:require [rui.config :refer [cfg]]
-            [grpc.transformer :refer [->message <-message]])
+  (:require [grpc.transformer :refer [->message <-message]])
   (:import [io.grpc ManagedChannelBuilder]))
 
 
