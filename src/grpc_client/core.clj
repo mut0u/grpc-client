@@ -16,3 +16,10 @@
   (-> (ManagedChannelBuilder/forAddress host port)
       (.usePlaintext true)
       (.build)))
+
+
+(defrecord GrpcClient [config]
+  clojure.lang.IFn
+  (invoke [_ method params]
+    (let [stub (create-channel (:host config) (:port config))]
+      (grpc-call method stub params))))
