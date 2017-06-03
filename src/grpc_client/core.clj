@@ -17,9 +17,12 @@
       (.usePlaintext true)
       (.build)))
 
-
-(defrecord GrpcClient [config]
+(defrecord GrpcClient [stub config]
   clojure.lang.IFn
   (invoke [_ method params]
-    (let [stub (create-channel (:host config) (:port config))]
-      (grpc-call method stub params))))
+    (grpc-call method stub params)))
+
+
+(defmacro defgrpc-client [name clz config]
+  `(let [stub# ( ~(symbol (str clz "/newBlockingStub")) (create-channel (:host ~config) (:port ~config)))]
+     (def ~name (->GrpcClient stub# ~config))))
