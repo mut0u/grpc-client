@@ -7,9 +7,11 @@
   (let [methods (.getDeclaredMethods (.getClass client))
         method (first (filter (fn [m] (= (name method-key) (.getName m))) methods))
         grpc-request-clazz (first (.getParameterTypes method))
-        builder (->message params grpc-request-clazz)
-        resp (.invoke method client  (object-array [builder]))]
-    (<-message resp)))
+        builder (->message params grpc-request-clazz)]
+    (try
+      (let [resp (.invoke method client  (object-array [builder]))]
+        (<-message resp))
+      (catch Exception ex))))
 
 
 (defn create-channel [host port]
