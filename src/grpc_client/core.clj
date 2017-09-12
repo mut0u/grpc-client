@@ -11,7 +11,9 @@
     (try
       (let [resp (.invoke method client  (object-array [builder]))]
         (<-message resp))
-      (catch Exception ex))))
+      (catch Exception ex
+        (when-not (clojure.string/starts-with? (->> ex .getCause .getMessage) "INTERNAL:")
+          (prn ex))))))
 
 
 (defn create-channel [host port]
